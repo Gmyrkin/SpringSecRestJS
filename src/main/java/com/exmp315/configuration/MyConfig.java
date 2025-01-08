@@ -1,6 +1,7 @@
 package com.exmp315.configuration;
 
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -13,7 +14,6 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.http.HttpClient;
 
 //
 @Configuration
@@ -27,13 +27,26 @@ public class MyConfig {
         return new RestTemplate();
     }
 
+
+//    @Bean
+//    public RestTemplate restTemplate(RestTemplateBuilder templateBuilder) {
+//        return templateBuilder
+//                .requestFactory(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()))
+//                .interceptors(new StatefulRestTemplateInterceptor())
+//                .build();
+//    }
+
+
+
 //    @Bean
 //    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
 //        RequestConfig requestConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD_STRICT).build();
 //        HttpClient httpClient = HttpClientBuilder.create()
 //                .setDefaultRequestConfig(requestConfig)
 //                .build();
-//
+
+
+
 //        RestTemplate restTemplate = restTemplateBuilder
 //                .requestFactory(
 //                        () -> {
@@ -41,17 +54,10 @@ public class MyConfig {
 //                            requestFactory.setHttpClient(httpClient);
 //                            return new BufferingClientHttpRequestFactory(requestFactory);
 //                        })
-//                .basicAuthentication("name", "lastName")
+//                .basicAuthentication("username", "password")
 //                .build();
 //
 //        return restTemplate;
 //    }
-
-
-//    @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-//        return builder.build();
-//    }
-
 
 }

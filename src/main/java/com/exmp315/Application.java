@@ -17,9 +17,9 @@ public class Application {
                 ConsumeWebService.class);
 
 
-        consumeWebService.useExchangeMethodRestTempl();
-        String useExchRestTempl = consumeWebService.useExchangeMethodRestTempl();
-        System.out.println(useExchRestTempl);
+//        consumeWebService.useExchangeMethodRestTempl();
+//        String useExchRestTempl = consumeWebService.useExchangeMethodRestTempl();
+//        System.out.println(useExchRestTempl);
 
 
         consumeWebService.getListUsersExchMethod();
@@ -27,8 +27,11 @@ public class Application {
         System.out.println(listUserExchRestTempl);
 
 
+
     }
 }
+
+
 
 
 
