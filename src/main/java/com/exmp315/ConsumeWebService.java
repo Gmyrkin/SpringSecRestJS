@@ -100,25 +100,25 @@ public class ConsumeWebService {
 
             }
 
-//        public String updateUserByExchMethod(Long id, String name, String lastName, Byte age) {
-//
-//            // Создаю объект обновленного пользователя, для изм
-//            User updatedUser = new User(3L,"Thomas", "Shelby",(byte) 39);
-//
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//            HttpEntity<User> requestEntity = new HttpEntity<>(updatedUser, headers);
-//
-//            ResponseEntity<String> response = restTemplate.exchange(
-//                    UPDATE_USER_URL,
-//                    HttpMethod.PUT,
-//                    requestEntity,
-//                    String.class);
-//
-//            return " User updating successfully: " + response.getBody();
-//
-//        }
+        public String updateUserByExchMethod(Long id, String name, String lastName, Byte age) {
+
+            // Создаю объект обновленного пользователя, для изм
+            User updatedUser = new User(3L,"Thomas", "Shelby",(byte) 39);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<User> requestEntity = new HttpEntity<>(updatedUser, headers);
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    UPDATE_USER_URL,
+                    HttpMethod.PUT,
+                    requestEntity,
+                    String.class);
+
+            return " User updating successfully: " + response.getBody();
+
+        }
 
     }
 

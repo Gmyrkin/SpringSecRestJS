@@ -26,9 +26,9 @@ public class Application {
         String result = consumeWebService.addUserByExchMethod();
         System.out.println(result);
 
-//
-//        String updateResult = consumeWebService.updateUserByExchMethod(3L, "James", "Brown", (byte) 39);
-//        System.out.println(updateResult);
+
+        String updateResult = consumeWebService.updateUserByExchMethod(3L, "James", "Brown", (byte) 39);
+        System.out.println(updateResult);
 
 
     }
