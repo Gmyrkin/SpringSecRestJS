@@ -1,8 +1,7 @@
 package com.exmp315;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.exmp315.model.User;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -56,13 +55,13 @@ public class ConsumeWebService {
 
         String sessionId = null;
 
-        if (cookies != null && !cookies.isEmpty()) {
+        if (cookies != null && !cookies.isEmpty()) { // Цикл на отсутвтие и пустое значение
 
             // Получение session ID из cookie
             for (String cookie : cookies) {
                 if (cookie.startsWith("JSESSIONID")) {
-                    sessionId = cookie.split(";")[0] // Вернет "JSESSIONID=ЦЫФРЫ".
-                            .split("=")[1]; // Извлечение значения (вернет "ЦЫФРЫ" и присвоит это значение переменной sessionId.
+                    sessionId = cookie.split(";")[0] // Вернет "JSESSIONID=ЦИФРЫ".
+                            .split("=")[1]; // Извлечение значения (вернет "ЦИФРЫ" и присвоит это значение переменной sessionId.
                     break;
                 }
             }
@@ -77,7 +76,82 @@ public class ConsumeWebService {
         return sessionId;
     }
 
-}
+        public String addUserByExchMethod() {
+
+            // Создаю объект пользователя, который отправлю
+            User newUser = new User(3L, "James", "Brown", (byte) 39);
+
+            // Установка заголовка Accept как APPLICATION_JSON, чтобы получить содержимое в формате JSON
+            // и устанавливает заголовок Content-Type на application/json.
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // Создание объекта HttpEntity с использованием HttpHeaders содержит заголовки и тело User
+            HttpEntity<User> requestEntity = new HttpEntity<>(newUser, headers);
+
+            // POST-запрос для создания нового пользователя, для получения сообщения от сервера.
+                ResponseEntity<String> response = restTemplate.exchange(
+                        CREATE_USER_URL,
+                        HttpMethod.POST,
+                        requestEntity,
+                        String.class);
+
+                return "User created successfully: " + response.getBody();
+
+            }
+
+//        public String updateUserByExchMethod(Long id, String name, String lastName, Byte age) {
+//
+//            // Создаю объект обновленного пользователя, для изм
+//            User updatedUser = new User(3L,"Thomas", "Shelby",(byte) 39);
+//
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//            HttpEntity<User> requestEntity = new HttpEntity<>(updatedUser, headers);
+//
+//            ResponseEntity<String> response = restTemplate.exchange(
+//                    UPDATE_USER_URL,
+//                    HttpMethod.PUT,
+//                    requestEntity,
+//                    String.class);
+//
+//            return " User updating successfully: " + response.getBody();
+//
+//        }
+
+    }
+
+
+
+
+
+
+
+//    public String addUserByExchMethod() {
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        // Создаю объект пользователя, который отправлю
+//        User newUser = new User(3L, "James", "Brown", (byte) 39);
+//
+//        // Установка заголовка Accept как APPLICATION_JSON, чтобы получить содержимое в формате JSON
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        // Создание объекта HttpEntity с использованием HttpHeaders для настройки запросов, содержит заголовки и тело
+//        HttpEntity<User> requestEntity  = new HttpEntity<>(newUser, headers);
+//
+//        // Метод использован для запроса POST, с настрокой запроса при создании нового пользователя
+//        ResponseEntity<User> response = restTemplate.exchange(CREATE_USER_URL,
+//                HttpMethod.POST,
+//                requestEntity,
+//                User.class);
+//
+//
+//        return response.getBody();
+//
+//    }
 
 
 
@@ -89,14 +163,6 @@ public class ConsumeWebService {
 //            return restTemplate.exchange(
 //                    GET_USERS_URL, HttpMethod.GET, entity, String.class).getBody();
 //        }
-
-
-
-
-
-
-
-
 
 
 
@@ -113,8 +179,6 @@ public class ConsumeWebService {
 //
 //    return response.getBody();
 //}
-
-
 
 
 
