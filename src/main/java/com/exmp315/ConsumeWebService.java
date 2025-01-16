@@ -15,6 +15,8 @@ import java.util.List;
 @SessionAttributes("usersList")
 public class ConsumeWebService {
 
+
+
     static String GET_USERS_URL = "http://94.198.50.185:7081/api/users";
     static String CREATE_USER_URL = "http://94.198.50.185:7081/api/users";
     static String UPDATE_USER_URL = "http://94.198.50.185:7081/api/users";
@@ -53,6 +55,7 @@ public class ConsumeWebService {
         List<String> cookies = headers.get("Set-Cookie"); // используется сервером для отправки cookies, get класса HttpHeaders, возвращает список значений
 
 
+
         String sessionId = null;
 
         if (cookies != null && !cookies.isEmpty()) { // Цикл на отсутвтие и пустое значение
@@ -78,7 +81,7 @@ public class ConsumeWebService {
 
         public String addUserByExchMethod() {
 
-            // Создаю объект пользователя, который отправлю
+            // Создание User, который отправлю на сервер
             User newUser = new User(3L, "James", "Brown", (byte) 39);
 
             // Установка заголовка Accept как APPLICATION_JSON, чтобы получить содержимое в формате JSON
@@ -100,13 +103,19 @@ public class ConsumeWebService {
 
             }
 
-        public String updateUserByExchMethod(Long id, String name, String lastName, Byte age) {
+        public String updateUserByExchMethod() {
 
-            // Создаю объект обновленного пользователя, для изм
-            User updatedUser = new User(3L,"Thomas", "Shelby",(byte) 39);
 
+            // Создание объекта обновленного пользователя, для изм
+            User updatedUser = new User(3L, "Thomas", "Shelby", (byte) 39);
+
+
+            // Создание заголовков Users
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+
+//            headers.set("Cookie", cookie);
+
 
             HttpEntity<User> requestEntity = new HttpEntity<>(updatedUser, headers);
 

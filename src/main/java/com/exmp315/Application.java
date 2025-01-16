@@ -10,6 +10,8 @@ public class Application {
 
     public static void main(String[] args) {
 
+        User updatedUser = new User(3L, "Thomas", "Shelby", (byte) 39);
+
 
 
         // РАБОЧИЙ
@@ -20,14 +22,16 @@ public class Application {
                 ConsumeWebService.class);
 
 
-        String listUserExchRestTempl = consumeWebService.getListUsersExchMethod();
-        System.out.println(listUserExchRestTempl);
+        String sessionID = consumeWebService.getListUsersExchMethod();
+        System.out.println(sessionID);
 
         String result = consumeWebService.addUserByExchMethod();
         System.out.println(result);
 
 
-        String updateResult = consumeWebService.updateUserByExchMethod(3L, "James", "Brown", (byte) 39);
+        // Создаю объект обновленного пользователя, для изм
+
+        String updateResult = consumeWebService.updateUserByExchMethod();
         System.out.println(updateResult);
 
 
