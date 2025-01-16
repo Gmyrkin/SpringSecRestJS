@@ -15,7 +15,11 @@ import java.util.List;
 @SessionAttributes("usersList")
 public class ConsumeWebService {
 
+    private final RestTemplate restTemplate;
 
+    public ConsumeWebService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     static String GET_USERS_URL = "http://94.198.50.185:7081/api/users";
     static String CREATE_USER_URL = "http://94.198.50.185:7081/api/users";
@@ -23,11 +27,6 @@ public class ConsumeWebService {
     static String DELETE_USER_URL = "http://94.198.50.185:7081/api/users/{id}";
 
 
-    private final RestTemplate restTemplate;
-
-    public ConsumeWebService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     public String getListUsersExchMethod() {
 
@@ -52,9 +51,9 @@ public class ConsumeWebService {
         HttpHeaders headers = response.getHeaders(); // для доступа к заголовкам HTTP из ответа
 
         // Извлекаем cookies из заголовка Set-Cookie
-        List<String> cookies = headers.get("Set-Cookie"); // используется сервером для отправки cookies, get класса HttpHeaders, возвращает список значений
+        // headers.get используется сервером для отправки cookies, get класса HttpHeaders, возвращает список значений
 
-
+        List<String> cookies = headers.get("Set-Cookie");
 
         String sessionId = null;
 
@@ -103,7 +102,8 @@ public class ConsumeWebService {
 
             }
 
-        public String updateUserByExchMethod() {
+
+        public String updateUserByExchMethod(String sessionId) {
 
 
             // Создание объекта обновленного пользователя, для изм
@@ -113,8 +113,9 @@ public class ConsumeWebService {
             // Создание заголовков Users
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Cookie", "JSESSIONID=" + sessionId); // Использование переданного Session ID
 
-//            headers.set("Cookie", cookie);
+//          headers.set("Cookie", cookie);
 
 
             HttpEntity<User> requestEntity = new HttpEntity<>(updatedUser, headers);
