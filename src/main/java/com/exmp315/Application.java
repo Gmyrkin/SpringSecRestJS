@@ -26,9 +26,6 @@ public class Application {
         String result = consumeWebService.addUserByExchMethod();
         System.out.println(result);
 
-//        // Получение sessionId и списка пользователей
-//        consumeWebService.getListUsersExchMethod();
-
         // Метод обновления пользователя
         String updateResult = consumeWebService.updateUserByExchMethod();
         System.out.println(updateResult);

@@ -27,37 +27,4 @@ public class MyConfig {
         return new RestTemplate();
     }
 
-
-//    @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder templateBuilder) {
-//        return templateBuilder
-//                .requestFactory(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()))
-//                .interceptors(new StatefulRestTemplateInterceptor())
-//                .build();
-//    }
-
-
-
-//    @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
-//        RequestConfig requestConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD_STRICT).build();
-//        HttpClient httpClient = HttpClientBuilder.create()
-//                .setDefaultRequestConfig(requestConfig)
-//                .build();
-
-
-
-//        RestTemplate restTemplate = restTemplateBuilder
-//                .requestFactory(
-//                        () -> {
-//                            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-//                            requestFactory.setHttpClient(httpClient);
-//                            return new BufferingClientHttpRequestFactory(requestFactory);
-//                        })
-//                .basicAuthentication("username", "password")
-//                .build();
-//
-//        return restTemplate;
-//    }
-
 }
