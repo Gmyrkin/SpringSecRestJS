@@ -94,7 +94,7 @@ public class ConsumeWebService {
             // и устанавливает заголовок Content-Type на application/json.
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Set-Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
+            headers.set("Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
 
 
 
@@ -126,7 +126,7 @@ public class ConsumeWebService {
         // Создание заголовков для обновления User
         HttpHeaders headersUpDate = new HttpHeaders();
         headersUpDate.setContentType(MediaType.APPLICATION_JSON);
-        headersUpDate.set("Set-Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
+        headersUpDate.set("Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
 
         HttpEntity<User> request = new HttpEntity<>(updatedUser, headersUpDate);
 
