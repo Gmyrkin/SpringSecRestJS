@@ -17,6 +17,19 @@ public class ConsumeWebService {
 
     private final RestTemplate restTemplate;
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    private String sessionId; // Поле класса для хранения sessionId
+
+    private List<String> allCookies; // Поле для хранения всех значений заголовка Set-Cookie
+
+
     public ConsumeWebService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
@@ -27,12 +40,10 @@ public class ConsumeWebService {
     static String DELETE_USER_URL = "http://94.198.50.185:7081/api/users/{id}";
 
 
-
     public String getListUsersExchMethod() {
 
         // GET-запрос к указанному URL, получение списка всех пользователей
         // .exchange метод позволяет отправлять HTTP-запросы и получать ответы
-
         ResponseEntity<String> response = restTemplate.exchange(GET_USERS_URL,
                 HttpMethod.GET,
                 null,
@@ -41,21 +52,20 @@ public class ConsumeWebService {
         // Получить список всех пользователей c
         String user = response.getBody();
         System.out.println("response body - " + user);
-        HttpHeaders responseHeaders = response.getHeaders();
-        System.out.println("response Headers - " + responseHeaders);
+        HttpHeaders headersResponse = response.getHeaders();
+        System.out.println("response Headers - " + headersResponse);
 
         // Извлечение cookies
         // .getHeaders() метод позволяет получить заголовки HTTP,
         // которые могут содержать метаданные (статус, тип, cookies)
-
         HttpHeaders headers = response.getHeaders(); // для доступа к заголовкам HTTP из ответа
+        headers.getFirst("Set-Cookie");
 
         // Извлекаем cookies из заголовка Set-Cookie
         // headers.get используется сервером для отправки cookies, get класса HttpHeaders, возвращает список значений
-
         List<String> cookies = headers.get("Set-Cookie");
 
-        String sessionId = null;
+        sessionId = null;
 
         if (cookies != null && !cookies.isEmpty()) { // Цикл на отсутвтие и пустое значение
 
@@ -69,11 +79,12 @@ public class ConsumeWebService {
             }
         }
 
-        if (sessionId != null) {
+//        if (sessionId != null) {
+//
+//            // Сохранение session ID в переменную класса
+//            System.out.println("Session ID: " + sessionId);
+//        }
 
-            // Сохранение session ID в переменную класса
-            System.out.println("Session ID: " + sessionId);
-        }
 
         return sessionId;
     }
@@ -87,6 +98,7 @@ public class ConsumeWebService {
             // и устанавливает заголовок Content-Type на application/json.
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Set-Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
 
             // Создание объекта HttpEntity с использованием HttpHeaders содержит заголовки и тело User
             HttpEntity<User> requestEntity = new HttpEntity<>(newUser, headers);
@@ -98,42 +110,40 @@ public class ConsumeWebService {
                         requestEntity,
                         String.class);
 
+
                 return "User created successfully: " + response.getBody();
 
             }
 
+    public String updateUserByExchMethod() {
 
-        public String updateUserByExchMethod(String sessionId) {
-
-
-            // Создание объекта обновленного пользователя, для изм
-            User updatedUser = new User(3L, "Thomas", "Shelby", (byte) 39);
-
-
-            // Создание заголовков Users
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Cookie", "JSESSIONID=" + sessionId); // Использование переданного Session ID
-
-//          headers.set("Cookie", cookie);
-
-
-            HttpEntity<User> requestEntity = new HttpEntity<>(updatedUser, headers);
-
-            ResponseEntity<String> response = restTemplate.exchange(
-                    UPDATE_USER_URL,
-                    HttpMethod.PUT,
-                    requestEntity,
-                    String.class);
-
-            return " User updating successfully: " + response.getBody();
-
+        // Проверить что sessionId установлен
+        if (sessionId == null) {
+            getListUsersExchMethod();
         }
+
+        // Создание объекта обновленного пользователя
+        User updatedUser = new User(3L, "Thomas", "Shelby", (byte) 39);
+
+        // Создание заголовков для обновления User
+        HttpHeaders headersUpDate = new HttpHeaders();
+        headersUpDate.setContentType(MediaType.APPLICATION_JSON);
+        headersUpDate.set("Set-Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
+
+        HttpEntity<User> request = new HttpEntity<>(updatedUser, headersUpDate);
+
+        ResponseEntity<String> responseEntityUpd = restTemplate.exchange(
+                UPDATE_USER_URL,
+                HttpMethod.PUT,
+                request,
+                String.class);
+
+        return " User updating successfully: " + responseEntityUpd.getBody();
 
     }
 
 
-
+}
 
 
 
