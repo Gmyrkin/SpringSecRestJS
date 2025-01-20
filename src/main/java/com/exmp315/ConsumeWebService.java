@@ -27,8 +27,6 @@ public class ConsumeWebService {
 
     private String sessionId; // Поле класса для хранения sessionId
 
-    private List<String> allCookies; // Поле для хранения всех значений заголовка Set-Cookie
-
 
     public ConsumeWebService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -59,7 +57,6 @@ public class ConsumeWebService {
         // .getHeaders() метод позволяет получить заголовки HTTP,
         // которые могут содержать метаданные (статус, тип, cookies)
         HttpHeaders headers = response.getHeaders(); // для доступа к заголовкам HTTP из ответа
-        headers.getFirst("Set-Cookie");
 
         // Извлекаем cookies из заголовка Set-Cookie
         // headers.get используется сервером для отправки cookies, get класса HttpHeaders, возвращает список значений
@@ -85,7 +82,6 @@ public class ConsumeWebService {
 //            System.out.println("Session ID: " + sessionId);
 //        }
 
-
         return sessionId;
     }
 
@@ -99,6 +95,8 @@ public class ConsumeWebService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Set-Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
+
+
 
             // Создание объекта HttpEntity с использованием HttpHeaders содержит заголовки и тело User
             HttpEntity<User> requestEntity = new HttpEntity<>(newUser, headers);
