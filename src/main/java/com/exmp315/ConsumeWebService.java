@@ -76,12 +76,6 @@ public class ConsumeWebService {
             }
         }
 
-//        if (sessionId != null) {
-//
-//            // Сохранение session ID в переменную класса
-//            System.out.println("Session ID: " + sessionId);
-//        }
-
         return sessionId;
     }
 
@@ -95,8 +89,6 @@ public class ConsumeWebService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Cookie", "JSESSIONID=" + sessionId); // Использование SessionID из поля класса
-
-
 
             // Создание объекта HttpEntity с использованием HttpHeaders содержит заголовки и тело User
             HttpEntity<User> requestEntity = new HttpEntity<>(newUser, headers);
@@ -140,6 +132,22 @@ public class ConsumeWebService {
 
     }
 
+    public String deleteUserByExchMethod(Long userId) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Cookie", "JSESSIONID=" + sessionId);
+
+        HttpEntity<User> requestEntity = new HttpEntity<>(headers);
+        String url = DELETE_USER_URL.replace("{id}", String.valueOf(userId));
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.DELETE,
+                requestEntity,
+                String.class);
+
+        return "User deleted successfully: " + response.getBody();
+    }
 
 }
 

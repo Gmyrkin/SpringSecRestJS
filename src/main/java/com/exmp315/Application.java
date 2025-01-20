@@ -33,6 +33,11 @@ public class Application {
         String updateResult = consumeWebService.updateUserByExchMethod();
         System.out.println(updateResult);
 
+        // Удаление пользователя с ID = 3
+        Long userIdToDelete = 3L;
+        String deleteResult = consumeWebService.deleteUserByExchMethod(userIdToDelete);
+        System.out.println(deleteResult);
+
 
     }
 
